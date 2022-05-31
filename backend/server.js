@@ -16,6 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 const movieRoutes = require('./routes/movieRoutes');
 const userRoutes = require('./routes/userRoutes');
 
+app.use('/api/movies', movieRoutes);
+app.use('/api/users', userRoutes);
+
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
@@ -28,9 +31,6 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   app.get('/', (req, res) => res.send('Please set to production'));
 }
-
-app.use('/api/movies', movieRoutes);
-app.use('/api/users', userRoutes);
 
 app.use(errorHandler);
 
