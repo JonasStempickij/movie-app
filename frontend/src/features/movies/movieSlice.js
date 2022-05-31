@@ -67,7 +67,7 @@ export const deleteMovie = createAsyncThunk(
 );
 
 export const movieSlice = createSlice({
-  name: 'movie',
+  name: 'movies',
   initialState,
   reducers: {
     reset: (state) => initialState,
