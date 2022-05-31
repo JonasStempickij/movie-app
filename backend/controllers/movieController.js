@@ -1,12 +1,14 @@
 const asyncHandler = require('express-async-handler');
+const { globalAgent } = require('http');
 
 const Movie = require('../models/movieModel');
+const User = require('../models/userModel');
 
 //  @desc   Get movies
 //  @route  GET /api/movies
 //  @access Private
 const getMovies = asyncHandler(async (req, res) => {
-  const movies = await Movie.find();
+  const movies = await Movie.find({ user: req.user.id });
 
   res.status(200).json(movies);
 });
@@ -21,6 +23,7 @@ const addMovie = asyncHandler(async (req, res) => {
   }
   const movie = await Movie.create({
     title: req.body.title,
+    user: req.user.id,
   });
   res.status(200).json(movie);
 });
@@ -34,6 +37,20 @@ const updateMovie = asyncHandler(async (req, res) => {
   if (!movie) {
     res.status(400);
     throw new Error('Movie not found');
+  }
+
+  const user = await User.findById(req.user.id);
+
+  // Check for user
+  if (!user) {
+    res.status(401);
+    throw new Error('User not found');
+  }
+
+  // Logged in user has to match movie added by that user
+  if (movie.user.toString() !== user.id) {
+    res.status(401);
+    throw new Error('User not authorized');
   }
 
   const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
@@ -53,6 +70,24 @@ const deleteMovie = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Movie not found');
   }
+
+  const user = await User.findById(req.user.id);
+
+  // Check for user
+  if (!user) {
+    res.status(401);
+    throw new Error('User not found');
+  }
+
+  // Logged in user has to match movie added by that user
+  if (movie.user.toString() !== user.id) {
+    res.status(401);
+    throw new Error('User not authorized');
+  }
+
+  const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
 
   await movie.remove();
 

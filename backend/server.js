@@ -13,8 +13,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const movieRoutes = require('./routes/movieRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 app.use('/api/movies', movieRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(errorHandler);
 
