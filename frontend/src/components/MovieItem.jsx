@@ -7,7 +7,7 @@ const MovieItem = ({ movie }) => {
   return (
     <div className='goal'>
       <div>{new Date(movie.createdAt).toLocaleString()}</div>
-      <h2>{movie.title}</h2>
+      <h2>{movie.name}</h2>
       <button
         onClick={() => {
           dispatch(deleteMovie(movie._id));

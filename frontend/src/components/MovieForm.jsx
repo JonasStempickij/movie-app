@@ -3,28 +3,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addMovie } from '../features/movies/movieSlice';
 
 const MovieForm = () => {
-  const [title, setTitle] = useState('');
+  const [name, setName] = useState('');
 
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(addMovie({ title }));
-    setTitle('');
+    dispatch(addMovie({ name }));
+    setName('');
   };
 
   return (
     <section className='form'>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
-          <label htmlFor='title'>Title</label>
+          <label htmlFor='name'>Title</label>
           <input
             type='text'
-            name='title'
-            id='title'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name='name'
+            id='name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className='form-group'>
