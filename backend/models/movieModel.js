@@ -7,9 +7,9 @@ const movieSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
-    title: {
+    name: {
       type: String,
-      required: [true, 'Please provide movie title'],
+      required: [true, 'Please provide movie name'],
     },
   },
   {

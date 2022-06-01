@@ -16,12 +16,12 @@ const getMovies = asyncHandler(async (req, res) => {
 //  @route  POST /api/movies
 //  @access Private
 const addMovie = asyncHandler(async (req, res) => {
-  if (!req.body.title) {
+  if (!req.body.name) {
     res.status(400);
-    throw new Error('Please provide movie title');
+    throw new Error('Please provide movie name');
   }
   const movie = await Movie.create({
-    title: req.body.title,
+    name: req.body.name,
     user: req.user.id,
   });
   res.status(200).json(movie);
