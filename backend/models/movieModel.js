@@ -11,6 +11,13 @@ const movieSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please provide movie name'],
     },
+    directors: Array,
+    genre: Array,
+    desc: String,
+    image_url: String,
+    thumb_url: String,
+    rating: Number,
+    year: Number,
   },
   {
     timestamps: true,

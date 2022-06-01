@@ -10,6 +10,7 @@ const port = process.env.PORT || 5000;
 const start = async () => {
   try {
     await connectDB();
+    await Movie.deleteMany();
     const mockPath = path.resolve(__dirname + '/mockdata/top250_min.json');
     const mockMovies = JSON.parse(await readFile(mockPath));
     const userMovies = mockMovies.map((movie) => {
