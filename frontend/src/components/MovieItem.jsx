@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteMovie, setMovie } from '../features/movies/movieSlice';
+import { MdDeleteForever } from 'react-icons/md';
 
 const MovieItem = ({ movie }) => {
   const dispatch = useDispatch();
@@ -20,9 +21,9 @@ const MovieItem = ({ movie }) => {
         onClick={() => {
           dispatch(deleteMovie(movie._id));
         }}
-        className='close'
+        className='delete'
       >
-        X
+        <MdDeleteForever />
       </button>
     </div>
   );

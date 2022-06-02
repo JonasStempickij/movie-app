@@ -1,13 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
 
 const Movie = () => {
   const { setMovie } = useSelector((state) => state.movies);
 
   return (
     <>
-      <FaLongArrowAltLeft />
+      <div className='movie-controls'>
+        <a href='/'>Back</a>
+      </div>
+
       <div className='movie-container'>
         <img
           className='poster'
