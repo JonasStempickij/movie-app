@@ -11,7 +11,17 @@ const User = require('../models/userModel');
 //  @route  GET /api/movies
 //  @access Private
 const getMovies = asyncHandler(async (req, res) => {
-  let result = Movie.find({ user: req.user.id });
+  const { genre } = req.query;
+
+  const queryObject = {
+    user: req.user.id,
+  };
+
+  if (genre && genre !== 'all') {
+    queryObject.genre = { $regex: genre, $options: 'i' };
+  }
+
+  let result = Movie.find(queryObject);
 
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 16;
