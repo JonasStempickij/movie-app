@@ -11,9 +11,20 @@ const User = require('../models/userModel');
 //  @route  GET /api/movies
 //  @access Private
 const getMovies = asyncHandler(async (req, res) => {
-  const movies = await Movie.find({ user: req.user.id });
+  let result = Movie.find({ user: req.user.id });
 
-  res.status(200).json(movies);
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 16;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
+
+  const movies = await result;
+
+  const totalMovies = await Movie.countDocuments({ user: req.user.id }); // needs changing
+  const numOfPages = Math.ceil(totalMovies / limit);
+
+  res.status(200).json({ movies, totalMovies, numOfPages });
 });
 
 //  @desc   Get single movie
@@ -104,10 +115,6 @@ const deleteMovie = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not authorized');
   }
-
-  const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
 
   await movie.remove();
 

@@ -4,6 +4,9 @@ import movieService from './movieService';
 const initialState = {
   movies: [],
   setMovie: {},
+  page: 0,
+  totalMovies: 0,
+  numOfPages: 1,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -32,10 +35,10 @@ export const addMovie = createAsyncThunk(
 // Get user movies
 export const getMovies = createAsyncThunk(
   'movies/getAll',
-  async (_, thunkAPI) => {
+  async (page, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await movieService.getMovies(token);
+      return await movieService.getMovies(page + 1, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -110,6 +113,9 @@ export const movieSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => initialState,
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -132,7 +138,9 @@ export const movieSlice = createSlice({
       .addCase(getMovies.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.movies = action.payload;
+        state.movies = action.payload.movies;
+        state.totalMovies = action.payload.totalMovies;
+        state.numOfPages = action.payload.numOfPages;
       })
       .addCase(getMovies.rejected, (state, action) => {
         state.isLoading = false;
@@ -148,6 +156,7 @@ export const movieSlice = createSlice({
         state.movies = state.movies.filter(
           (movie) => movie._id !== action.payload.id
         );
+        state.totalMovies = state.totalMovies - 1;
       })
       .addCase(deleteMovie.rejected, (state, action) => {
         state.isLoading = false;
@@ -183,5 +192,5 @@ export const movieSlice = createSlice({
   },
 });
 
-export const { reset } = movieSlice.actions;
+export const { reset, setPage } = movieSlice.actions;
 export default movieSlice.reducer;

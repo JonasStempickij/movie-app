@@ -1,19 +1,28 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // import MovieForm from '../components/MovieForm'; // Maybe use later for adding movies
-import { reset, getMovies, imdbMovies } from '../features/movies/movieSlice';
+import {
+  reset,
+  setPage,
+  getMovies,
+  imdbMovies,
+} from '../features/movies/movieSlice';
 import Spinner from '../components/Spinner';
 import MovieItem from '../components/MovieItem';
+import ReactPaginate from 'react-paginate';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { movies, isLoading, isError, message } = useSelector(
-    (state) => state.movies
-  );
+  const { movies, page, totalMovies, numOfPages, isLoading, isError, message } =
+    useSelector((state) => state.movies);
+
+  const handlePageClick = (e) => {
+    dispatch(setPage(e.selected));
+  };
 
   useEffect(() => {
     if (isError) {
@@ -23,12 +32,12 @@ const Dashboard = () => {
       navigate('/login');
     }
 
-    dispatch(getMovies());
+    dispatch(getMovies(page));
 
-    if (!isError) {
+    if (isError) {
       dispatch(reset());
     }
-  }, [user, navigate, isError, message, dispatch]);
+  }, [user, navigate, isError, message, dispatch, page]);
 
   if (isLoading) {
     return <Spinner />;
@@ -39,6 +48,7 @@ const Dashboard = () => {
       <section className='heading'>
         <h1>Welcome to {user && user.name}</h1>
         <p>Movies Dashboard</p>
+        <small>you have {totalMovies} movies</small>
       </section>
 
       {/* <MovieForm />  */}
@@ -68,6 +78,12 @@ const Dashboard = () => {
           </>
         )}
       </section>
+      <ReactPaginate
+        className='paginate'
+        onPageChange={handlePageClick}
+        pageCount={numOfPages}
+        forcePage={page}
+      />
     </>
   );
 };
