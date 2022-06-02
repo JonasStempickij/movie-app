@@ -15,13 +15,17 @@ const addMovie = async (movieData, token) => {
 };
 
 // Get user movies
-const getMovies = async (page, token) => {
+const getMovies = async (filter, token) => {
+  const { page, genre } = filter;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get(API_URL + `?page=${page}`, config);
+  const response = await axios.get(
+    API_URL + `?page=${page}&genre=${genre}`,
+    config
+  );
 
   return response.data;
 };

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// import MovieForm from '../components/MovieForm'; // Maybe use later for adding movies
+import MovieForm from '../components/MovieForm';
 import {
   reset,
   setPage,
@@ -17,8 +17,16 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { movies, page, totalMovies, numOfPages, isLoading, isError, message } =
-    useSelector((state) => state.movies);
+  const {
+    movies,
+    page,
+    genre,
+    totalMovies,
+    numOfPages,
+    isLoading,
+    isError,
+    message,
+  } = useSelector((state) => state.movies);
 
   const handlePageClick = (e) => {
     dispatch(setPage(e.selected));
@@ -32,12 +40,12 @@ const Dashboard = () => {
       navigate('/login');
     }
 
-    dispatch(getMovies(page));
+    dispatch(getMovies({ page, genre }));
 
     if (isError) {
       dispatch(reset());
     }
-  }, [user, navigate, isError, message, dispatch, page]);
+  }, [user, genre, navigate, isError, message, dispatch, page]);
 
   if (isLoading) {
     return <Spinner />;
@@ -46,12 +54,11 @@ const Dashboard = () => {
   return (
     <>
       <section className='heading'>
-        <h1>Welcome to {user && user.name}</h1>
-        <p>Movies Dashboard</p>
+        <h1>Welcome to {user && user.name} movie dashboard</h1>
         <small>you have {totalMovies} movies</small>
       </section>
 
-      {/* <MovieForm />  */}
+      <MovieForm genre={genre} />
 
       <section
         className='content'
@@ -62,7 +69,7 @@ const Dashboard = () => {
           gap: '20px',
         }}
       >
-        {movies.length > 0 ? (
+        {totalMovies > 0 ? (
           <div className='movies'>
             {movies.map((movie) => {
               return <MovieItem key={movie._id} movie={movie} />;

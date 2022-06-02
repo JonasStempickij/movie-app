@@ -4,6 +4,7 @@ import movieService from './movieService';
 const initialState = {
   movies: [],
   setMovie: {},
+  genre: 'all',
   page: 0,
   totalMovies: 0,
   numOfPages: 1,
@@ -35,10 +36,10 @@ export const addMovie = createAsyncThunk(
 // Get user movies
 export const getMovies = createAsyncThunk(
   'movies/getAll',
-  async (page, thunkAPI) => {
+  async (filter, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await movieService.getMovies(page + 1, token);
+      return await movieService.getMovies(filter, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -116,6 +117,9 @@ export const movieSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload;
     },
+    setGenre: (state, action) => {
+      state.genre = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -192,5 +196,5 @@ export const movieSlice = createSlice({
   },
 });
 
-export const { reset, setPage } = movieSlice.actions;
+export const { reset, setPage, setGenre } = movieSlice.actions;
 export default movieSlice.reducer;

@@ -31,7 +31,7 @@ const getMovies = asyncHandler(async (req, res) => {
 
   const movies = await result;
 
-  const totalMovies = await Movie.countDocuments({ user: req.user.id }); // needs changing
+  const totalMovies = await Movie.countDocuments(queryObject);
   const numOfPages = Math.ceil(totalMovies / limit);
 
   res.status(200).json({ movies, totalMovies, numOfPages });

@@ -1,38 +1,56 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addMovie } from '../features/movies/movieSlice';
+import { addMovie, setGenre } from '../features/movies/movieSlice';
 
-const MovieForm = () => {
-  const [name, setName] = useState('');
-
+const MovieForm = ({ genre }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const genres = [
+    'all',
+    'horror',
+    'action',
+    'drama',
+    'thriller',
+    'crime',
+    'mystery',
+    'music',
+    'sport',
+    'animation',
+    'adventure',
+    'family',
+    'romance',
+    'sci-fi',
+    'comedy',
+    'western',
+    'war',
+    'biography',
+    'film-noir',
+  ];
 
-    dispatch(addMovie({ name }));
-    setName('');
+  const onChange = (e) => {
+    console.log(e.target.value);
+    dispatch(setGenre(e.target.value));
   };
 
   return (
     <section className='form'>
-      <form onSubmit={onSubmit}>
-        <div className='form-group'>
-          <label htmlFor='name'>Title</label>
-          <input
-            type='text'
-            name='name'
-            id='name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className='form-group'>
-          <button className='btn btn-block' type='submit'>
-            Add Movie
-          </button>
-        </div>
-      </form>
+      <div className='form-group'>
+        <p>Filter by genre: </p>
+        <select
+          defaultValue='all'
+          name='genre'
+          value={genre}
+          onChange={onChange}
+        >
+          {genres.map((genreOption, index) => {
+            return (
+              <option key={index} value={genreOption}>
+                {genreOption}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     </section>
   );
 };
