@@ -42,9 +42,9 @@ const Dashboard = () => {
 
     dispatch(getMovies({ page, genre }));
 
-    if (isError) {
-      dispatch(reset());
-    }
+    // if (!isError) {
+    //   dispatch(reset());
+    // }
   }, [user, genre, navigate, isError, message, dispatch, page]);
 
   if (isLoading) {
@@ -55,7 +55,7 @@ const Dashboard = () => {
     <>
       <section className='heading'>
         <h1>Welcome to {user && user.name} movie dashboard</h1>
-        <small>you have {totalMovies} movies</small>
+        {totalMovies ? <small>you have {totalMovies} movies</small> : ''}
       </section>
 
       <MovieForm genre={genre} />
@@ -85,12 +85,16 @@ const Dashboard = () => {
           </>
         )}
       </section>
-      <ReactPaginate
-        className='paginate'
-        onPageChange={handlePageClick}
-        pageCount={numOfPages}
-        forcePage={page}
-      />
+      {totalMovies > 16 ? (
+        <ReactPaginate
+          className='paginate'
+          onPageChange={handlePageClick}
+          pageCount={numOfPages}
+          forcePage={page}
+        />
+      ) : (
+        ''
+      )}
     </>
   );
 };

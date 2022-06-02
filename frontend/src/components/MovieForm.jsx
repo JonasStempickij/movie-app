@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addMovie, setGenre } from '../features/movies/movieSlice';
+import { useDispatch } from 'react-redux';
+import { setGenre } from '../features/movies/movieSlice';
 
 const MovieForm = ({ genre }) => {
   const dispatch = useDispatch();
@@ -28,7 +27,6 @@ const MovieForm = ({ genre }) => {
   ];
 
   const onChange = (e) => {
-    console.log(e.target.value);
     dispatch(setGenre(e.target.value));
   };
 
@@ -36,12 +34,7 @@ const MovieForm = ({ genre }) => {
     <section className='form'>
       <div className='form-group'>
         <p>Filter by genre: </p>
-        <select
-          defaultValue='all'
-          name='genre'
-          value={genre}
-          onChange={onChange}
-        >
+        <select name='genre' value={genre} onChange={onChange}>
           {genres.map((genreOption, index) => {
             return (
               <option key={index} value={genreOption}>
