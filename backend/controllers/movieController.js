@@ -1,4 +1,8 @@
+const path = require('path');
+const { readFile } = require('fs/promises');
+
 const asyncHandler = require('express-async-handler');
+const jwt = require('jsonwebtoken');
 
 const Movie = require('../models/movieModel');
 const User = require('../models/userModel');
@@ -10,6 +14,27 @@ const getMovies = asyncHandler(async (req, res) => {
   const movies = await Movie.find({ user: req.user.id });
 
   res.status(200).json(movies);
+});
+
+//  @desc   Get single movie
+//  @route  GET /api/movies/:id
+//  @access Private
+const getMovie = asyncHandler(async (req, res) => {
+  if (!req.params.id) {
+    res.status(400);
+    throw new Error('Please provide movie id');
+  }
+  const movie = await Movie.findById(req.params.id);
+  if (!movie) {
+    res.status(400);
+    throw new Error('Movie not found');
+  }
+  if (movie.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error('User not authorized');
+  }
+
+  res.status(200).json(movie);
 });
 
 //  @desc   Add movie
@@ -89,9 +114,33 @@ const deleteMovie = asyncHandler(async (req, res) => {
   res.status(200).json({ id: req.params.id });
 });
 
+// Populate user with top 250 imdb movies
+const imdbMovies = asyncHandler(async (req, res) => {
+  try {
+    await Movie.deleteMany({ user: req.user.id });
+    const mockPath = path.resolve(__dirname, '../mockdata/top250_min.json');
+    const mockMovies = JSON.parse(await readFile(mockPath));
+    const userMovies = mockMovies.map((movie) => {
+      return {
+        ...movie,
+        user: req.user.id,
+      };
+    });
+    await Movie.create(userMovies);
+    console.log('Success');
+    res.status(200).json(userMovies);
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    throw new Error('Something went wrong');
+  }
+});
+
 module.exports = {
   getMovies,
   addMovie,
+  getMovie,
   updateMovie,
   deleteMovie,
+  imdbMovies,
 };

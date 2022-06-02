@@ -26,7 +26,7 @@ const getMovies = async (token) => {
   return response.data;
 };
 
-// Get user movies
+// Delete user movie
 const deleteMovie = async (movieId, token) => {
   const config = {
     headers: {
@@ -38,10 +38,36 @@ const deleteMovie = async (movieId, token) => {
   return response.data;
 };
 
+// Get single user movie
+const getMovie = async (movieId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(API_URL + movieId, config);
+
+  return response.data;
+};
+
+// Get single user movie
+const imdbMovies = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.put(API_URL, '', config);
+
+  return response.data;
+};
+
 const movieService = {
   addMovie,
   getMovies,
   deleteMovie,
+  getMovie,
+  imdbMovies,
 };
 
 export default movieService;

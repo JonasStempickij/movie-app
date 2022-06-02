@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import MovieForm from '../components/MovieForm';
-import { reset, getMovies } from '../features/movies/movieSlice';
+// import MovieForm from '../components/MovieForm'; // Maybe use later for adding movies
+import { reset, getMovies, imdbMovies } from '../features/movies/movieSlice';
 import Spinner from '../components/Spinner';
 import MovieItem from '../components/MovieItem';
 
@@ -37,21 +37,35 @@ const Dashboard = () => {
   return (
     <>
       <section className='heading'>
-        <h1>Welcome {user && user.name}</h1>
+        <h1>Welcome to {user && user.name}</h1>
         <p>Movies Dashboard</p>
       </section>
 
-      <MovieForm />
+      {/* <MovieForm />  */}
 
-      <section className='content'>
+      <section
+        className='content'
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '20px',
+        }}
+      >
         {movies.length > 0 ? (
-          <div className='goals'>
+          <div className='movies'>
             {movies.map((movie) => {
               return <MovieItem key={movie._id} movie={movie} />;
             })}
           </div>
         ) : (
-          <h3>You have no movies added</h3>
+          <>
+            <h3>You have no movies</h3>
+            <p>Would you like to add IMDB top 250 movies ?</p>
+            <button className='btn' onClick={() => dispatch(imdbMovies())}>
+              Populate dashboard
+            </button>
+          </>
         )}
       </section>
     </>

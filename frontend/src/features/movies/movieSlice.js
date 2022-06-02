@@ -3,6 +3,7 @@ import movieService from './movieService';
 
 const initialState = {
   movies: [],
+  setMovie: {},
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -66,6 +67,44 @@ export const deleteMovie = createAsyncThunk(
   }
 );
 
+// Get single movie
+export const setMovie = createAsyncThunk(
+  'movies/getMovie',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await movieService.getMovie(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Populate with imdb top 250 movies
+export const imdbMovies = createAsyncThunk(
+  'movies/imdbMovies',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await movieService.imdbMovies(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const movieSlice = createSlice({
   name: 'movies',
   initialState,
@@ -111,6 +150,32 @@ export const movieSlice = createSlice({
         );
       })
       .addCase(deleteMovie.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(setMovie.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(setMovie.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.setMovie = action.payload;
+      })
+      .addCase(setMovie.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(imdbMovies.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(imdbMovies.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.movies = action.payload;
+      })
+      .addCase(imdbMovies.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
