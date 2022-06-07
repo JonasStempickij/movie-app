@@ -12,6 +12,7 @@ const movieSchema = mongoose.Schema(
       required: [true, 'Please provide movie name'],
     },
     directors: Array,
+    actors: Array,
     genre: Array,
     desc: String,
     image_url: String,

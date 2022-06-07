@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { FaSignInAlt } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
 import Spinner from '../components/Spinner';
+import couch from '../assets/img/couch.svg';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -54,45 +54,55 @@ const Login = () => {
   }
 
   return (
-    <>
-      <section className='heading'>
-        <h1>
-          <FaSignInAlt /> Login
-        </h1>
-        <p>Login and start adding movies to your list</p>
-      </section>
-      <section className='form'>
-        <form onSubmit={onSubmit}>
-          <div className='form-group'>
-            <input
-              type='email'
-              className='form-control'
-              name='email'
-              id='email'
-              value={email}
-              placeholder='Please enter your email'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              name='password'
-              id='password'
-              value={password}
-              placeholder='Enter password'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <button type='submit' className='btn btn-block'>
-              Submit
+    <div className='row align-items-center justify-content-center text-center '>
+      {/* <div className='d-none d-md-block col-md-6 align-self-center'> */}
+      <img
+        className='d-none d-md-block img-fluid col-md-6 p-5'
+        src={couch}
+        alt=''
+      />
+      {/* </div> */}
+      <div className='col-md-6'>
+        <h1 className='my-5'>Movie Dashboard</h1>
+        <p className='h2 mb-4'> Sign In</p>
+        <section className='form'>
+          <form className='text-center' onSubmit={onSubmit}>
+            <div className='d-flex flex-column gap-3 mb-4'>
+              <input
+                type='email'
+                className='form-control text-light'
+                name='email'
+                id='email'
+                value={email}
+                placeholder='Please enter your email'
+                onChange={onChange}
+              />
+              <input
+                type='password'
+                className='form-control'
+                name='password'
+                id='password'
+                value={password}
+                placeholder='Enter password'
+                onChange={onChange}
+              />
+            </div>
+            <button
+              type='submit'
+              className='btn btn-danger w-100 text-uppercase fs-3'
+            >
+              Sign In
             </button>
-          </div>
-        </form>
-      </section>
-    </>
+            <sub>
+              Don't have an account?{' '}
+              <a className='text-light' href='/register'>
+                Sign Up
+              </a>
+            </sub>
+          </form>
+        </section>
+      </div>
+    </div>
   );
 };
 

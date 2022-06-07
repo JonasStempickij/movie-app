@@ -31,7 +31,7 @@ const MovieForm = ({ genre }) => {
   };
 
   return (
-    <section className='form'>
+    <section className='text-center mb-3'>
       <div className='form-group'>
         <p>Filter by genre: </p>
         <select name='genre' value={genre} onChange={onChange}>

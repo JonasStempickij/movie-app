@@ -61,67 +61,62 @@ const Register = () => {
   }
 
   return (
-    <>
-      <section className='heading'>
-        <h1>
-          <FaUser /> Register
-        </h1>
-        <p>Please create an account</p>
-      </section>
-      <section className='form'>
-        <form onSubmit={onSubmit}>
-          <div className='form-group'>
-            <input
-              type='text'
-              className='form-control'
-              name='name'
-              id='name'
-              value={name}
-              placeholder='Please enter your name'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='email'
-              className='form-control'
-              name='email'
-              id='email'
-              value={email}
-              placeholder='Please enter your email'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              name='password'
-              id='password'
-              value={password}
-              placeholder='Enter password'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              name='password2'
-              id='password2'
-              value={password2}
-              placeholder='Confirm password'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <button type='submit' className='btn btn-block'>
-              Submit
-            </button>
-          </div>
-        </form>
-      </section>
-    </>
+    <div className='text-center'>
+      <h1 className='my-5'>Movie Dashboard</h1>
+      <p className='h2 mb-4'>Sign Up</p>
+      <form onSubmit={onSubmit}>
+        <div className='d-flex flex-column gap-3 mb-4'>
+          <input
+            type='text'
+            className='form-control'
+            name='name'
+            id='name'
+            value={name}
+            placeholder='Enter your name'
+            onChange={onChange}
+          />
+          <input
+            type='email'
+            className='form-control'
+            name='email'
+            id='email'
+            value={email}
+            placeholder='Enter your email'
+            onChange={onChange}
+          />
+          <input
+            type='password'
+            className='form-control'
+            name='password'
+            id='password'
+            value={password}
+            placeholder='Enter password'
+            onChange={onChange}
+          />
+          <input
+            type='password'
+            className='form-control'
+            name='password2'
+            id='password2'
+            value={password2}
+            placeholder='Confirm password'
+            onChange={onChange}
+          />
+        </div>
+        <button
+          type='submit'
+          className='btn btn-danger w-100 text-uppercase fs-3'
+        >
+          Sign Up
+        </button>
+        <sub>
+          Already have an account ?{' '}
+          <a className='text-light' href='/login'>
+            Sign In
+          </a>
+        </sub>
+      </form>
+    </div>
   );
 };
 export default Register;

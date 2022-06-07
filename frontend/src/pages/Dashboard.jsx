@@ -45,7 +45,7 @@ const Dashboard = () => {
     // if (!isError) {
     //   dispatch(reset());
     // }
-  }, [user, genre, navigate, isError, message, dispatch, page]);
+  }, [user, genre, navigate, isError, message, dispatch, page, totalMovies]);
 
   if (isLoading) {
     return <Spinner />;
@@ -53,12 +53,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <section className='heading'>
-        <h1>Welcome to {user && user.name} movie dashboard</h1>
+      <section className='text-center p-5'>
+        <div className='h1'>Welcome to {user && user.name} movie dashboard</div>
         {totalMovies ? <small>you have {totalMovies} movies</small> : ''}
       </section>
 
-      <MovieForm genre={genre} />
+      {totalMovies === 0 ? '' : <MovieForm genre={genre} />}
 
       <section
         className='content'
@@ -70,7 +70,7 @@ const Dashboard = () => {
         }}
       >
         {totalMovies > 0 ? (
-          <div className='movies'>
+          <div className='row mb-3'>
             {movies.map((movie) => {
               return <MovieItem key={movie._id} movie={movie} />;
             })}
@@ -79,7 +79,10 @@ const Dashboard = () => {
           <>
             <h3>You have no movies</h3>
             <p>Would you like to add IMDB top 250 movies ?</p>
-            <button className='btn' onClick={() => dispatch(imdbMovies())}>
+            <button
+              className='btn btn-outline-light'
+              onClick={() => dispatch(imdbMovies())}
+            >
               Populate dashboard
             </button>
           </>

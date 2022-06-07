@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteMovie, setMovie } from '../features/movies/movieSlice';
-import { MdDeleteForever } from 'react-icons/md';
 
 const MovieItem = ({ movie }) => {
   const dispatch = useDispatch();
@@ -13,17 +12,9 @@ const MovieItem = ({ movie }) => {
   };
 
   return (
-    <div className='movie'>
+    <div className='col-6 col-md-4 col-lg-3 d-flex mb-3 align-items-center justify-content-center'>
       <button onClick={onClick}>
-        <img src={movie.thumb_url} alt='' />
-      </button>
-      <button
-        onClick={() => {
-          dispatch(deleteMovie(movie._id));
-        }}
-        className='delete'
-      >
-        <MdDeleteForever />
+        <img className='img-fluid' src={movie.thumb_url} alt='' />
       </button>
     </div>
   );
