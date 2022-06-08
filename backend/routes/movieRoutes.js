@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
   getMovies,
@@ -7,17 +7,17 @@ const {
   updateMovie,
   deleteMovie,
   imdbMovies,
-} = require('../controllers/movieController');
+} = require("../controllers/movieController");
 
-const { protect } = require('../middleware/authMiddleware');
+const { protect } = require("../middleware/authMiddleware");
 
 router
-  .route('/')
+  .route("/")
   .get(protect, getMovies)
   .post(protect, addMovie)
   .put(protect, imdbMovies);
 router
-  .route('/:id')
+  .route("/:id")
   .put(protect, updateMovie)
   .delete(protect, deleteMovie)
   .get(protect, getMovie);

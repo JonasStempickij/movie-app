@@ -1,11 +1,11 @@
-const path = require('path');
-const express = require('express');
+const path = require("path");
+const express = require("express");
 //  eslint-disable-next-line no-unused-vars
-const colors = require('colors');
+const colors = require("colors");
 //  eslint-disable-next-line no-unused-vars
-const dotenv = require('dotenv').config();
-const { errorHandler } = require('./middleware/errorMiddleware');
-const connectDB = require('./config/db');
+const dotenv = require("dotenv").config();
+const { errorHandler } = require("./middleware/errorMiddleware");
+const connectDB = require("./config/db");
 const port = process.env.PORT || 5000;
 
 connectDB();
@@ -15,23 +15,23 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const movieRoutes = require('./routes/movieRoutes');
-const userRoutes = require('./routes/userRoutes');
+const movieRoutes = require("./routes/movieRoutes");
+const userRoutes = require("./routes/userRoutes");
 
-app.use('/api/movies', movieRoutes);
-app.use('/api/users', userRoutes);
+app.use("/api/movies", movieRoutes);
+app.use("/api/users", userRoutes);
 
 // Serve frontend
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-  app.get('*', (req, res) =>
+  app.get("*", (req, res) =>
     res.sendFile(
-      path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+      path.resolve(__dirname, "../", "frontend", "build", "index.html")
     )
   );
 } else {
-  app.get('/', (req, res) => res.send('Please set to production'));
+  app.get("/", (req, res) => res.send("Please set to production"));
 }
 
 app.use(errorHandler);

@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = '/api/movies/';
+const API_URL = "/api/movies/";
 
 // Add new movie
 const addMovie = async (movieData, token) => {
@@ -61,7 +61,7 @@ const imdbMovies = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.put(API_URL, '', config);
+  const response = await axios.put(API_URL, "", config);
 
   return response.data;
 };

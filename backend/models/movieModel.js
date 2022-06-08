@@ -1,15 +1,15 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const movieSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
+      ref: "User",
     },
     name: {
       type: String,
-      required: [true, 'Please provide movie name'],
+      required: [true, "Please provide movie name"],
     },
     directors: Array,
     actors: Array,
@@ -25,4 +25,4 @@ const movieSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Movie', movieSchema);
+module.exports = mongoose.model("Movie", movieSchema);

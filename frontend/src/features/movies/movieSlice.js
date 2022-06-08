@@ -1,22 +1,22 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import movieService from './movieService';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import movieService from "./movieService";
 
 const initialState = {
   movies: [],
   setMovie: {},
-  genre: 'all',
+  genre: "all",
   page: 0,
   totalMovies: 0,
   numOfPages: 1,
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
+  message: "",
 };
 
 // Add new movie
 export const addMovie = createAsyncThunk(
-  'movies/create',
+  "movies/create",
   async (movieData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -35,7 +35,7 @@ export const addMovie = createAsyncThunk(
 
 // Get user movies
 export const getMovies = createAsyncThunk(
-  'movies/getAll',
+  "movies/getAll",
   async (filter, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -54,7 +54,7 @@ export const getMovies = createAsyncThunk(
 
 // Delete movie
 export const deleteMovie = createAsyncThunk(
-  'movies/deleteMovie',
+  "movies/deleteMovie",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -73,7 +73,7 @@ export const deleteMovie = createAsyncThunk(
 
 // Get single movie
 export const setMovie = createAsyncThunk(
-  'movies/getMovie',
+  "movies/getMovie",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -92,7 +92,7 @@ export const setMovie = createAsyncThunk(
 
 // Populate with imdb top 250 movies
 export const imdbMovies = createAsyncThunk(
-  'movies/imdbMovies',
+  "movies/imdbMovies",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -110,7 +110,7 @@ export const imdbMovies = createAsyncThunk(
 );
 
 export const movieSlice = createSlice({
-  name: 'movies',
+  name: "movies",
   initialState,
   reducers: {
     reset: (state) => initialState,

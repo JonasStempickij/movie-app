@@ -1,7 +1,7 @@
-const path = require('path');
-const { readFile } = require('fs/promises');
-const asyncHandler = require('express-async-handler');
-const Movie = require('../models/movieModel');
+const path = require("path");
+const { readFile } = require("fs/promises");
+const asyncHandler = require("express-async-handler");
+const Movie = require("../models/movieModel");
 
 //  @desc   Get movies
 //  @route  GET /api/movies
@@ -13,8 +13,8 @@ const getMovies = asyncHandler(async (req, res) => {
     user: req.user.id,
   };
 
-  if (genre && genre !== 'all') {
-    queryObject.genre = { $regex: genre, $options: 'i' };
+  if (genre && genre !== "all") {
+    queryObject.genre = { $regex: genre, $options: "i" };
   }
 
   let result = Movie.find(queryObject);
@@ -39,16 +39,16 @@ const getMovies = asyncHandler(async (req, res) => {
 const getMovie = asyncHandler(async (req, res) => {
   if (!req.params.id) {
     res.status(400);
-    throw new Error('Please provide movie id');
+    throw new Error("Please provide movie id");
   }
   const movie = await Movie.findById(req.params.id);
   if (!movie) {
     res.status(400);
-    throw new Error('Movie not found');
+    throw new Error("Movie not found");
   }
   if (movie.user.toString() !== req.user.id) {
     res.status(401);
-    throw new Error('User not authorized');
+    throw new Error("User not authorized");
   }
 
   res.status(200).json(movie);
@@ -60,7 +60,7 @@ const getMovie = asyncHandler(async (req, res) => {
 const addMovie = asyncHandler(async (req, res) => {
   if (!req.body.name) {
     res.status(400);
-    throw new Error('Please provide movie name');
+    throw new Error("Please provide movie name");
   }
   const movie = await Movie.create({
     name: req.body.name,
@@ -76,19 +76,19 @@ const updateMovie = asyncHandler(async (req, res) => {
   const movie = await Movie.findById(req.params.id);
   if (!movie) {
     res.status(400);
-    throw new Error('Movie not found');
+    throw new Error("Movie not found");
   }
 
   // Check for user
   if (!req.user) {
     res.status(401);
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 
   // Logged in user has to match movie added by that user
   if (movie.user.toString() !== req.user.id) {
     res.status(401);
-    throw new Error('User not authorized');
+    throw new Error("User not authorized");
   }
 
   const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
@@ -106,19 +106,19 @@ const deleteMovie = asyncHandler(async (req, res) => {
 
   if (!movie) {
     res.status(400);
-    throw new Error('Movie not found');
+    throw new Error("Movie not found");
   }
 
   // Check for user
   if (!req.user) {
     res.status(401);
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 
   // Logged in user has to match movie added by that user
   if (movie.user.toString() !== req.user.id) {
     res.status(401);
-    throw new Error('User not authorized');
+    throw new Error("User not authorized");
   }
 
   await movie.remove();
@@ -130,7 +130,7 @@ const deleteMovie = asyncHandler(async (req, res) => {
 const imdbMovies = asyncHandler(async (req, res) => {
   try {
     await Movie.deleteMany({ user: req.user.id });
-    const mockPath = path.resolve(__dirname, '../mockdata/top250_min.json');
+    const mockPath = path.resolve(__dirname, "../mockdata/top250_min.json");
     const mockMovies = JSON.parse(await readFile(mockPath));
     const userMovies = mockMovies.map((movie) => {
       return {
@@ -139,12 +139,12 @@ const imdbMovies = asyncHandler(async (req, res) => {
       };
     });
     await Movie.create(userMovies);
-    console.log('Success');
+    console.log("Success");
     res.status(200).json(userMovies);
   } catch (error) {
     console.log(error);
     res.status(500);
-    throw new Error('Something went wrong');
+    throw new Error("Something went wrong");
   }
 });
 
