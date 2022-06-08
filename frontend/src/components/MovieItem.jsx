@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteMovie, setMovie } from '../features/movies/movieSlice';
+import { setMovie } from '../features/movies/movieSlice';
 
 const MovieItem = ({ movie }) => {
   const dispatch = useDispatch();

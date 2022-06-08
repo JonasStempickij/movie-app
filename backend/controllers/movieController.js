@@ -1,11 +1,7 @@
 const path = require('path');
 const { readFile } = require('fs/promises');
-
 const asyncHandler = require('express-async-handler');
-const jwt = require('jsonwebtoken');
-
 const Movie = require('../models/movieModel');
-const User = require('../models/userModel');
 
 //  @desc   Get movies
 //  @route  GET /api/movies
@@ -78,7 +74,6 @@ const addMovie = asyncHandler(async (req, res) => {
 //  @access Private
 const updateMovie = asyncHandler(async (req, res) => {
   const movie = await Movie.findById(req.params.id);
-
   if (!movie) {
     res.status(400);
     throw new Error('Movie not found');

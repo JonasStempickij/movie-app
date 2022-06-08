@@ -2,12 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import MovieForm from '../components/MovieForm';
-import {
-  reset,
-  setPage,
-  getMovies,
-  imdbMovies,
-} from '../features/movies/movieSlice';
+import { setPage, getMovies, imdbMovies } from '../features/movies/movieSlice';
 import Spinner from '../components/Spinner';
 import MovieItem from '../components/MovieItem';
 import ReactPaginate from 'react-paginate';

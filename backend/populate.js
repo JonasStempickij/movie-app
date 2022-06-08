@@ -1,11 +1,11 @@
 const path = require('path');
 const { readFile } = require('fs/promises');
+//  eslint-disable-next-line no-unused-vars
 const dotenv = require('dotenv').config();
+//  eslint-disable-next-line no-unused-vars
 const colors = require('colors');
 const connectDB = require('./config/db');
 const Movie = require('./models/movieModel');
-
-const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
