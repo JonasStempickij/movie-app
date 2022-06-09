@@ -2,7 +2,7 @@
 
 Simple showcase of sign in/sign up form and movie list fetch from databse, built with React, Redux, Javascript, CSS
 
-### Installation
+## Installation
 
 ```
 npm install
@@ -10,7 +10,7 @@ cd ./frontend
 npm install
 ```
 
-### Usage
+## Usage
 
 Create `.env` file inside `root` directory and define your enviroment values
 
@@ -21,13 +21,13 @@ MONGO_URI = [MONGO_URI]
 JWT_SECRET = [JWT_SECRET]
 ```
 
-### Run local
+## Run local
 
 ```
 npm run dev
 ```
 
-### Build and deploy on Heroku
+## Build and deploy on Heroku
 
 [Get Started with MongoDB Atlas](https://www.mongodb.com/docs/atlas/getting-started/)
 
