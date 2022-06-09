@@ -1,3 +1,7 @@
+<h1 align="center">
+  <img height=250px src="/frontend/src/assets/img/couch.svg" alt="Movie App Logo" />
+</h1>
+
 # movie-app
 
 Simple showcase of sign in/sign up form and movie list fetch from databse, built with React, Redux, Javascript, CSS
