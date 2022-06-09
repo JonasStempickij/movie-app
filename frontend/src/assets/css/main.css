@@ -10727,7 +10727,6 @@ textarea.form-control-lg {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  outline: 1px white solid;
 }
 
 body {
@@ -10738,6 +10737,12 @@ body {
 
 .h-100vh {
   height: 100vh;
+}
+
+.illustration {
+  background: rgba(169, 169, 169, 0.42);
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
 .paginate {

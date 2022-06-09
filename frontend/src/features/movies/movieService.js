@@ -1,77 +1,77 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = "/api/movies/";
+const API_URL = '/api/movies/';
 
 // Add new movie
 const addMovie = async (movieData, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.post(API_URL, movieData, config);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    const response = await axios.post(API_URL, movieData, config);
 
-  return response.data;
+    return response.data;
 };
 
 // Get user movies
 const getMovies = async (filter, token) => {
-  const { page, genre } = filter;
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.get(
-    API_URL + `?page=${page}&genre=${genre}`,
-    config
-  );
+    const { page, genre } = filter;
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    const response = await axios.get(
+        API_URL + `?page=${page + 1}&genre=${genre}`,
+        config
+    );
 
-  return response.data;
+    return response.data;
 };
 
 // Delete user movie
 const deleteMovie = async (movieId, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.delete(API_URL + movieId, config);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    const response = await axios.delete(API_URL + movieId, config);
 
-  return response.data;
+    return response.data;
 };
 
 // Get single user movie
 const getMovie = async (movieId, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.get(API_URL + movieId, config);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    const response = await axios.get(API_URL + movieId, config);
 
-  return response.data;
+    return response.data;
 };
 
 // Get single user movie
 const imdbMovies = async (token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.put(API_URL, "", config);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    const response = await axios.put(API_URL, '', config);
 
-  return response.data;
+    return response.data;
 };
 
 const movieService = {
-  addMovie,
-  getMovies,
-  deleteMovie,
-  getMovie,
-  imdbMovies,
+    addMovie,
+    getMovies,
+    deleteMovie,
+    getMovie,
+    imdbMovies,
 };
 
 export default movieService;

@@ -13,7 +13,7 @@ $body-color: #fff;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    outline: 1px white solid;
+    // outline: 1px white solid;
 }
 
 body {
@@ -24,6 +24,12 @@ body {
 
 .h-100vh {
     height: 100vh;
+}
+
+.illustration {
+    background: rgb(169 169 169 / 42%);
+    border-radius: 1rem;
+    padding: 1rem;
 }
 
 .paginate {

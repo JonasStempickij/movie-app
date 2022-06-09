@@ -56,7 +56,7 @@ const Login = () => {
     return (
         <div className='d-flex h-100 align-items-center'>
             <img
-                className='d-none d-md-block img-fluid col-md-6'
+                className='d-none d-md-block img-fluid col-md-6 illustration'
                 src={couch}
                 alt=''
             />
