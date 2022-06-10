@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "test": "jest",
         "lint": "npx eslint ./backend",
         "start": "node backend/server.js",
         "server": "nodemon backend/server.js",
